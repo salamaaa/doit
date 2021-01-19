@@ -4,22 +4,45 @@
             <h2 id="title">
                 Todo List
             </h2>
-        <add-item-form />
+        <add-item-form v-on:reloadList="getList()"/>
         </div>
-        <list-view />
+        <list-view
+            :items="items"
+            v-on:reloadList="getList()"
+        />
     </div>
 </template>
 
 <script>
-import addItemForm from './addItemForm'
-import listView from './listView'
+import addItemForm from './addItemForm.vue'
+import listView from './listView.vue'
 export default {
     name: "app",
-    components:{
+    components: {
         addItemForm,
         listView
+    },
+    data: function (){
+        return {
+            items:[]
+        }
+    },
+    methods:{
+        getList(){
+            axios.get('api/items')
+            .then(response =>{
+                this.item = response.data
+            })
+            .catch(error=>{
+                console.log(error);
+            });
+        }
+    },
+    created() {
+        this.getList();
     }
 }
+
 </script>
 
 <style scoped>

@@ -28,13 +28,14 @@ export default {
                 item: this.item
             })
                 .then(response => {
-                    if (response.status === 201) {
-                        this.item.name === "";
+                    if (response.status == 201) {
+                        this.item.name = "";
+                        this.$emit('reloadList');
                     }
                 })
                 .catch(error => {
                     console.log(error);
-                })
+                });
         }
     },
 
